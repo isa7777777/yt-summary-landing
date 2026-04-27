@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — YouTube Summary</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" class="logo">YouTube<span> Summary</span></a>
+  </div>
+</header>
+
+<section class="checkout">
+  <div class="container-narrow">
+    <div class="checkout-card">
+      <h1>Almost there!</h1>
+      <p>Complete your purchase to unlock unlimited summaries.</p>
+
+      <div class="checkout-plan-info" id="plan-info">
+        <div class="plan-name" id="plan-name">Pro Yearly</div>
+        <div class="plan-price" id="plan-price">$39 / year</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Your email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+        <small style="color: #888; font-size: 13px;">We'll send your receipt and access link here.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="userId">User ID (auto-filled by extension)</label>
+        <input type="text" id="userId" placeholder="Will be filled automatically" readonly>
+      </div>
+
+      <div class="payment-buttons">
+        <button class="pay-button pay-card" id="pay-card-btn">💳 Pay with Card</button>
+        <button class="pay-button pay-crypto" id="pay-crypto-btn">🪙 Pay with Crypto (USDT)</button>
+      </div>
+
+      <p class="checkout-disclaimer">
+        By proceeding, you agree to our
+        <a href="terms.html" style="color: #ff4b4b;">Terms</a> and
+        <a href="privacy.html" style="color: #ff4b4b;">Privacy Policy</a>.<br>
+        Cancel anytime. No hidden fees.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="contact.html">Contact</a>
+    <div class="copyright">© 2026 YouTube Summary. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// Парсим URL и определяем тариф
+const params = new URLSearchParams(window.location.search);
+const plan = params.get('plan') || 'pro_yearly';
+const userId = params.get('userId') || '';
+
+const PLANS = {
+  pro_monthly: { name: 'Pro Monthly', price: '$4.99 / month', amount: 4.99, billing: 'month', plan: 'pro' },
+  pro_yearly: { name: 'Pro Yearly', price: '$39 / year', amount: 39, billing: 'year', plan: 'pro' },
+  premium_monthly: { name: 'Premium Monthly', price: '$9.99 / month', amount: 9.99, billing: 'month', plan: 'premium' },
+  premium_yearly: { name: 'Premium Yearly', price: '$79 / year', amount: 79, billing: 'year', plan: 'premium' },
+};
+
+const selected = PLANS[plan] || PLANS.pro_yearly;
+document.getElementById('plan-name').textContent = selected.name;
+document.getElementById('plan-price').textContent = selected.price;
+
+if (userId) {
+  document.getElementById('userId').value = userId;
+}
+
+// Backend URL
+const API_BASE = 'https://yt-summary-backend-soux.onrender.com';
+
+// Обработчик Pay with Card (Robokassa)
+document.getElementById('pay-card-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const uid = document.getElementById('userId').value.trim();
+
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email');
+    return;
+  }
+  if (!uid) {
+    alert('User ID is missing. Please open this page from the extension.');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/checkout/start`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: uid,
+        email,
+        plan: selected.plan,
+        billingInterval: selected.billing,
+        amount: selected.amount,
+        provider: 'robokassa',
+      }),
+    });
+    const data = await res.json();
+    if (data.ok && data.paymentUrl) {
+      window.location.href = data.paymentUrl;
+    } else {
+      alert('Payment error: ' + (data.errorCode || 'unknown'));
+    }
+  } catch (e) {
+    alert('Network error. Please try again.');
+  }
+});
+
+// Обработчик Pay with Crypto (NOWPayments)
+document.getElementById('pay-crypto-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const uid = document.getElementById('userId').value.trim();
+
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email');
+    return;
+  }
+  if (!uid) {
+    alert('User ID is missing. Please open this page from the extension.');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/checkout/start`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: uid,
+        email,
+        plan: selected.plan,
+        billingInterval: selected.billing,
+        amount: selected.amount,
+        provider: 'nowpayments',
+      }),
+    });
+    const data = await res.json();
+    if (data.ok && data.paymentUrl) {
+      window.location.href = data.paymentUrl;
+    } else {
+      alert('Payment error: ' + (data.errorCode || 'unknown'));
+    }
+  } catch (e) {
+    alert('Network error. Please try again.');
+  }
+});
+</script>
+
+</body>
+</html>
