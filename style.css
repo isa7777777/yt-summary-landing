@@ -1,0 +1,455 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.container-narrow {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+header {
+  background: #000;
+  color: #fff;
+  padding: 16px 0;
+  border-bottom: 2px solid #ff4b4b;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #ff4b4b;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* Hero */
+.hero {
+  padding: 80px 0;
+  text-align: center;
+  background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%);
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero h1 span {
+  color: #ff4b4b;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #ff4b4b;
+  color: #fff;
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  margin-left: 12px;
+}
+
+/* Features */
+.features {
+  padding: 80px 0;
+}
+
+.features h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature {
+  padding: 30px;
+  background: #fafafa;
+  border-radius: 16px;
+}
+
+.feature h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #ff4b4b;
+}
+
+.feature p {
+  color: #555;
+}
+
+/* Pricing */
+.pricing {
+  padding: 80px 0;
+  background: #fafafa;
+}
+
+.pricing h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pricing-subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 50px;
+  font-size: 17px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.plan {
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+}
+
+.plan.featured {
+  border-color: #ff4b4b;
+  position: relative;
+}
+
+.plan.featured::before {
+  content: "MOST POPULAR";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff4b4b;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.plan h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.plan .price {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 16px 0 4px;
+}
+
+.plan .price-suffix {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.plan .save {
+  color: #ff4b4b;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.plan ul {
+  list-style: none;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.plan ul li {
+  padding: 8px 0;
+  color: #444;
+}
+
+.plan ul li::before {
+  content: "✓ ";
+  color: #ff4b4b;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.plan-button {
+  display: block;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.plan.featured .plan-button {
+  background: #ff4b4b;
+}
+
+.plan-button:hover {
+  background: #333;
+}
+
+.plan.featured .plan-button:hover {
+  background: #e63b3b;
+}
+
+.plan .alt-link {
+  display: block;
+  margin-top: 14px;
+  color: #888;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.plan .alt-link:hover {
+  color: #ff4b4b;
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  color: #aaa;
+  padding: 40px 0;
+  text-align: center;
+}
+
+footer a {
+  color: #aaa;
+  text-decoration: none;
+  margin: 0 14px;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+footer .copyright {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Static pages */
+.page-content {
+  padding: 60px 0;
+}
+
+.page-content h1 {
+  font-size: 36px;
+  margin-bottom: 24px;
+}
+
+.page-content h2 {
+  font-size: 24px;
+  margin: 30px 0 16px;
+}
+
+.page-content p {
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.page-content ul {
+  margin: 0 0 16px 24px;
+  color: #333;
+}
+
+.page-content ul li {
+  margin-bottom: 6px;
+}
+
+.page-content a {
+  color: #ff4b4b;
+}
+
+.page-content .updated {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* Checkout page */
+.checkout {
+  padding: 60px 0;
+  min-height: calc(100vh - 200px);
+}
+
+.checkout-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.checkout-card h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.checkout-plan-info {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.checkout-plan-info .plan-name {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.checkout-plan-info .plan-price {
+  font-size: 28px;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ff4b4b;
+}
+
+.payment-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pay-button {
+  display: block;
+  text-align: center;
+  padding: 14px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pay-card {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.pay-crypto {
+  background: #fff;
+  color: #1a1a1a;
+  border: 2px solid #1a1a1a;
+}
+
+.pay-button:hover {
+  opacity: 0.9;
+}
+
+.checkout-disclaimer {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 36px; }
+  .hero p { font-size: 17px; }
+  nav { width: 100%; text-align: center; }
+  nav a { margin: 0 10px; }
+}
