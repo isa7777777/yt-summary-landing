@@ -32,14 +32,20 @@
       </div>
 
       <div class="form-group">
-        <label for="userId">User ID (auto-filled by extension)</label>
+        <label for="userId">User ID</label>
         <input type="text" id="userId" placeholder="Will be filled automatically" readonly>
+        <small style="color: #888; font-size: 13px;" id="userid-hint">Auto-filled by extension. If empty, please open this page from the extension.</small>
       </div>
 
       <div class="payment-buttons">
         <button class="pay-button pay-card" id="pay-card-btn">💳 Pay with Card</button>
         <button class="pay-button pay-crypto" id="pay-crypto-btn">🪙 Pay with Crypto (USDT)</button>
       </div>
+
+      <p class="checkout-disclaimer" id="card-disclaimer" style="display: none;">
+        💡 <strong>Card payments are processed by Robokassa in Russian Rubles.</strong><br>
+        Your bank will convert the amount to your local currency. A small conversion fee may apply.
+      </p>
 
       <p class="checkout-disclaimer">
         By proceeding, you agree to our
@@ -56,37 +62,48 @@
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Service</a>
     <a href="refund.html">Refund Policy</a>
+    <a href="offer.html">Public Offer</a>
     <a href="contact.html">Contact</a>
     <div class="copyright">© 2026 YouTube Summary. All rights reserved.</div>
   </div>
 </footer>
 
 <script>
-// Парсим URL и определяем тариф
 const params = new URLSearchParams(window.location.search);
 const plan = params.get('plan') || 'pro_yearly';
 const userId = params.get('userId') || '';
+const lang = params.get('lang') || 'en';
 
 const PLANS = {
-  pro_monthly: { name: 'Pro Monthly', price: '$4.99 / month', amount: 4.99, billing: 'month', plan: 'pro' },
-  pro_yearly: { name: 'Pro Yearly', price: '$39 / year', amount: 39, billing: 'year', plan: 'pro' },
-  premium_monthly: { name: 'Premium Monthly', price: '$9.99 / month', amount: 9.99, billing: 'month', plan: 'premium' },
-  premium_yearly: { name: 'Premium Yearly', price: '$79 / year', amount: 79, billing: 'year', plan: 'premium' },
+  pro_monthly: { name: 'Pro Monthly', usd: 4.99, rub: 399, billing: 'month', plan: 'pro' },
+  pro_yearly: { name: 'Pro Yearly', usd: 39, rub: 2990, billing: 'year', plan: 'pro' },
+  premium_monthly: { name: 'Premium Monthly', usd: 9.99, rub: 790, billing: 'month', plan: 'premium' },
+  premium_yearly: { name: 'Premium Yearly', usd: 79, rub: 5990, billing: 'year', plan: 'premium' },
 };
 
 const selected = PLANS[plan] || PLANS.pro_yearly;
+const isRu = lang === 'ru';
+
 document.getElementById('plan-name').textContent = selected.name;
-document.getElementById('plan-price').textContent = selected.price;
+document.getElementById('plan-price').textContent = isRu
+  ? `${selected.rub.toLocaleString('ru-RU')} ₽ / ${selected.billing === 'year' ? 'год' : 'месяц'}`
+  : `$${selected.usd} / ${selected.billing}`;
 
 if (userId) {
   document.getElementById('userId').value = userId;
 }
 
-// Backend URL
+const cardBtn = document.getElementById('pay-card-btn');
+const cardDisclaimer = document.getElementById('card-disclaimer');
+
+// Show conversion disclaimer for non-Russian users
+if (!isRu) {
+  cardDisclaimer.style.display = 'block';
+}
+
 const API_BASE = 'https://yt-summary-backend-soux.onrender.com';
 
-// Обработчик Pay with Card (Robokassa)
-document.getElementById('pay-card-btn').addEventListener('click', async () => {
+async function startCheckout(provider) {
   const email = document.getElementById('email').value.trim();
   const uid = document.getElementById('userId').value.trim();
 
@@ -99,43 +116,10 @@ document.getElementById('pay-card-btn').addEventListener('click', async () => {
     return;
   }
 
-  try {
-    const res = await fetch(`${API_BASE}/api/checkout/start`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: uid,
-        email,
-        plan: selected.plan,
-        billingInterval: selected.billing,
-        amount: selected.amount,
-        provider: 'robokassa',
-      }),
-    });
-    const data = await res.json();
-    if (data.ok && data.paymentUrl) {
-      window.location.href = data.paymentUrl;
-    } else {
-      alert('Payment error: ' + (data.errorCode || 'unknown'));
-    }
-  } catch (e) {
-    alert('Network error. Please try again.');
-  }
-});
-
-// Обработчик Pay with Crypto (NOWPayments)
-document.getElementById('pay-crypto-btn').addEventListener('click', async () => {
-  const email = document.getElementById('email').value.trim();
-  const uid = document.getElementById('userId').value.trim();
-
-  if (!email || !email.includes('@')) {
-    alert('Please enter a valid email');
-    return;
-  }
-  if (!uid) {
-    alert('User ID is missing. Please open this page from the extension.');
-    return;
-  }
+  const btn = provider === 'robokassa' ? document.getElementById('pay-card-btn') : document.getElementById('pay-crypto-btn');
+  const oldText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
 
   try {
     const res = await fetch(`${API_BASE}/api/checkout/start`, {
@@ -146,20 +130,26 @@ document.getElementById('pay-crypto-btn').addEventListener('click', async () => 
         email,
         plan: selected.plan,
         billingInterval: selected.billing,
-        amount: selected.amount,
-        provider: 'nowpayments',
+        provider,
       }),
     });
     const data = await res.json();
     if (data.ok && data.paymentUrl) {
       window.location.href = data.paymentUrl;
     } else {
-      alert('Payment error: ' + (data.errorCode || 'unknown'));
+      alert('Payment error: ' + (data.errorCode || data.errorMessage || 'unknown'));
+      btn.disabled = false;
+      btn.textContent = oldText;
     }
   } catch (e) {
     alert('Network error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = oldText;
   }
-});
+}
+
+cardBtn.addEventListener('click', () => startCheckout('robokassa'));
+document.getElementById('pay-crypto-btn').addEventListener('click', () => startCheckout('nowpayments'));
 </script>
 
 </body>
