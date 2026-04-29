@@ -447,6 +447,32 @@ footer .copyright {
   margin-top: 24px;
 }
 
+/* Language switcher */
+.lang-switcher {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 16px;
+  font-size: 13px;
+}
+
+.lang-switcher a {
+  color: #fff;
+  opacity: 0.5;
+  text-decoration: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.lang-switcher a.active {
+  opacity: 1;
+  background: rgba(255, 75, 75, 0.2);
+  color: #ff4b4b;
+}
+
+.lang-switcher a:hover {
+  opacity: 1;
+}
+
 @media (max-width: 600px) {
   .hero h1 { font-size: 36px; }
   .hero p { font-size: 17px; }
