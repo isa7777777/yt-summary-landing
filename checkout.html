@@ -15,8 +15,8 @@
       <a href="index.html">Home</a>
       <a href="contact.html">Contact</a>
       <span class="lang-switcher">
-        <a href="checkout.html" class="active">EN</a>
-        <a href="checkout.html?lang=ru">RU</a>
+        <a href="#" id="lang-en" class="active">EN</a>
+        <a href="#" id="lang-ru">RU</a>
       </span>
     </nav>
   </div>
@@ -25,8 +25,8 @@
 <section class="checkout">
   <div class="container-narrow">
     <div class="checkout-card">
-      <h1>Almost there!</h1>
-      <p>Complete your purchase to unlock unlimited summaries.</p>
+      <h1 id="checkout-title">Almost there!</h1>
+      <p id="checkout-subtitle">Complete your purchase to unlock unlimited summaries.</p>
 
       <div class="checkout-plan-info" id="plan-info">
         <div class="plan-name" id="plan-name">Pro Yearly</div>
@@ -34,15 +34,15 @@
       </div>
 
       <div class="form-group">
-        <label for="email">Your email</label>
+        <label for="email" id="email-label">Your email</label>
         <input type="email" id="email" placeholder="you@example.com" required>
-        <small style="color: #888; font-size: 13px;">We'll send your receipt and access link here.</small>
+        <small style="color: #888; font-size: 13px;" id="email-hint">We'll send your receipt and access link here.</small>
       </div>
 
       <div class="form-group">
-        <label for="userId">User ID</label>
+        <label for="userId" id="userid-label">User ID</label>
         <input type="text" id="userId" placeholder="Will be filled automatically" readonly>
-        <small style="color: #888; font-size: 13px;" id="userid-hint">Auto-filled by extension. If empty, please open this page from the extension.</small>
+        <small style="color: #888; font-size: 13px;" id="userid-hint">Auto-filled by extension.</small>
       </div>
 
       <div class="payment-buttons">
@@ -51,11 +51,11 @@
       </div>
 
       <p class="checkout-disclaimer" id="card-disclaimer" style="display: none;">
-        💡 <strong>Card payments are processed by Robokassa in Russian Rubles.</strong><br>
-        Your bank will convert the amount to your local currency. A small conversion fee may apply.
+        💡 <strong>Card payments are processed by Robokassa.</strong><br>
+        For non-Russian cards: amount will be charged in your card's currency. A small bank conversion fee may apply.
       </p>
 
-      <p class="checkout-disclaimer">
+      <p class="checkout-disclaimer" id="terms-disclaimer">
         By proceeding, you agree to our
         <a href="terms.html" style="color: #ff4b4b;">Terms</a> and
         <a href="privacy.html" style="color: #ff4b4b;">Privacy Policy</a>.<br>
@@ -79,8 +79,15 @@
 <script>
 const params = new URLSearchParams(window.location.search);
 const plan = params.get('plan') || 'pro_yearly';
-const userId = params.get('userId') || '';
 const lang = params.get('lang') || 'en';
+
+// userId — сохраняем в sessionStorage чтобы не терять при переключении языка
+let userId = params.get('userId') || '';
+if (userId) {
+  sessionStorage.setItem('ys_checkout_user_id', userId);
+} else {
+  userId = sessionStorage.getItem('ys_checkout_user_id') || '';
+}
 
 const PLANS = {
   pro_monthly: { name: 'Pro Monthly', usd: 4.99, rub: 399, billing: 'month', plan: 'pro' },
@@ -89,24 +96,93 @@ const PLANS = {
   premium_yearly: { name: 'Premium Yearly', usd: 79, rub: 5990, billing: 'year', plan: 'premium' },
 };
 
-const selected = PLANS[plan] || PLANS.pro_yearly;
+const I18N = {
+  en: {
+    title: 'Almost there!',
+    subtitle: 'Complete your purchase to unlock unlimited summaries.',
+    emailLabel: 'Your email',
+    emailHint: "We'll send your receipt and access link here.",
+    userIdLabel: 'User ID',
+    userIdHint: 'Auto-filled by extension. If empty, please open this page from the extension.',
+    payCard: '💳 Pay with Card',
+    payCrypto: '🪙 Pay with Crypto (USDT)',
+    cardDisclaimer: '💡 <strong>Card payments are processed by Robokassa.</strong><br>For non-Russian cards: amount will be charged in your card\'s currency. A small bank conversion fee may apply.',
+    invalidEmail: 'Please enter a valid email',
+    missingUserId: 'User ID is missing. Please open this page from the extension.',
+    networkError: 'Network error. Please try again.',
+    paymentError: 'Payment error: ',
+    loading: 'Loading...',
+  },
+  ru: {
+    title: 'Почти готово!',
+    subtitle: 'Завершите покупку, чтобы получить неограниченный доступ.',
+    emailLabel: 'Ваш email',
+    emailHint: 'На него мы отправим чек и информацию о доступе.',
+    userIdLabel: 'ID пользователя',
+    userIdHint: 'Подставляется автоматически расширением. Если поле пустое — откройте эту страницу из расширения.',
+    payCard: '💳 Оплатить картой',
+    payCrypto: '🪙 Оплатить криптой (USDT)',
+    cardDisclaimer: '💡 <strong>Оплата картой обрабатывается через Robokassa.</strong><br>Чек на русском языке будет автоматически выслан на ваш email.',
+    invalidEmail: 'Введите корректный email',
+    missingUserId: 'ID пользователя не указан. Откройте эту страницу из расширения.',
+    networkError: 'Ошибка сети. Попробуйте ещё раз.',
+    paymentError: 'Ошибка оплаты: ',
+    loading: 'Загрузка...',
+  },
+};
+
+const t = I18N[lang === 'ru' ? 'ru' : 'en'];
 const isRu = lang === 'ru';
 
-document.getElementById('plan-name').textContent = selected.name;
+const selected = PLANS[plan] || PLANS.pro_yearly;
+
+// Применяем переводы
+document.getElementById('checkout-title').textContent = t.title;
+document.getElementById('checkout-subtitle').textContent = t.subtitle;
+document.getElementById('email-label').textContent = t.emailLabel;
+document.getElementById('email-hint').textContent = t.emailHint;
+document.getElementById('userid-label').textContent = t.userIdLabel;
+document.getElementById('userid-hint').textContent = t.userIdHint;
+document.getElementById('pay-card-btn').textContent = t.payCard;
+document.getElementById('pay-crypto-btn').textContent = t.payCrypto;
+document.getElementById('card-disclaimer').innerHTML = t.cardDisclaimer;
+
+// Цена и название плана
+document.getElementById('plan-name').textContent = isRu
+  ? selected.name.replace('Yearly', 'Годовой').replace('Monthly', 'Месячный')
+  : selected.name;
 document.getElementById('plan-price').textContent = isRu
   ? `${selected.rub.toLocaleString('ru-RU')} ₽ / ${selected.billing === 'year' ? 'год' : 'месяц'}`
   : `$${selected.usd} / ${selected.billing}`;
 
-if (userId) {
-  document.getElementById('userId').value = userId;
+// userId field
+document.getElementById('userId').value = userId;
+
+// Disclaimer для не-русских юзеров
+const cardDisclaimer = document.getElementById('card-disclaimer');
+cardDisclaimer.style.display = 'block';
+
+// Активная вкладка языка + правильные ссылки переключателя (с сохранением plan и userId)
+const langEnLink = document.getElementById('lang-en');
+const langRuLink = document.getElementById('lang-ru');
+
+function buildLangUrl(targetLang) {
+  const p = new URLSearchParams();
+  p.set('plan', plan);
+  p.set('lang', targetLang);
+  if (userId) p.set('userId', userId);
+  return `checkout.html?${p.toString()}`;
 }
 
-const cardBtn = document.getElementById('pay-card-btn');
-const cardDisclaimer = document.getElementById('card-disclaimer');
+langEnLink.href = buildLangUrl('en');
+langRuLink.href = buildLangUrl('ru');
 
-// Show conversion disclaimer for non-Russian users
-if (!isRu) {
-  cardDisclaimer.style.display = 'block';
+if (isRu) {
+  langEnLink.classList.remove('active');
+  langRuLink.classList.add('active');
+} else {
+  langEnLink.classList.add('active');
+  langRuLink.classList.remove('active');
 }
 
 const API_BASE = 'https://yt-summary-backend-soux.onrender.com';
@@ -116,18 +192,20 @@ async function startCheckout(provider) {
   const uid = document.getElementById('userId').value.trim();
 
   if (!email || !email.includes('@')) {
-    alert('Please enter a valid email');
+    alert(t.invalidEmail);
     return;
   }
   if (!uid) {
-    alert('User ID is missing. Please open this page from the extension.');
+    alert(t.missingUserId);
     return;
   }
 
   const btn = provider === 'robokassa' ? document.getElementById('pay-card-btn') : document.getElementById('pay-crypto-btn');
   const oldText = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Loading...';
+  btn.textContent = t.loading;
+
+  console.log('[CHECKOUT] starting:', { provider, plan: selected.plan, billing: selected.billing, uid });
 
   try {
     const res = await fetch(`${API_BASE}/api/checkout/start`, {
@@ -139,24 +217,30 @@ async function startCheckout(provider) {
         plan: selected.plan,
         billingInterval: selected.billing,
         provider,
+        lang,
       }),
     });
+
+    console.log('[CHECKOUT] response status:', res.status);
     const data = await res.json();
+    console.log('[CHECKOUT] response data:', data);
+
     if (data.ok && data.paymentUrl) {
       window.location.href = data.paymentUrl;
     } else {
-      alert('Payment error: ' + (data.errorCode || data.errorMessage || 'unknown'));
+      alert(t.paymentError + (data.errorCode || data.errorMessage || 'unknown'));
       btn.disabled = false;
       btn.textContent = oldText;
     }
   } catch (e) {
-    alert('Network error. Please try again.');
+    console.error('[CHECKOUT] network error:', e);
+    alert(t.networkError);
     btn.disabled = false;
     btn.textContent = oldText;
   }
 }
 
-cardBtn.addEventListener('click', () => startCheckout('robokassa'));
+document.getElementById('pay-card-btn').addEventListener('click', () => startCheckout('robokassa'));
 document.getElementById('pay-crypto-btn').addEventListener('click', () => startCheckout('nowpayments'));
 </script>
 
