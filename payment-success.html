@@ -14,38 +14,45 @@
     <nav>
       <a href="index.html">Home</a>
       <span class="lang-switcher">
-        <a href="payment-success.html" class="active">EN</a>
-        <a href="index-ru.html">RU</a>
+        <a href="#" id="lang-en" class="active">EN</a>
+        <a href="#" id="lang-ru">RU</a>
       </span>
     </nav>
   </div>
 </header>
 
-<section class="checkout">
-  <div class="container-narrow">
-    <div class="checkout-card" style="text-align: center;">
-      <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
-      <h1>Payment Successful!</h1>
-      <p style="margin: 20px 0; font-size: 17px; color: #555;">
-        Your subscription has been activated. You can now go back to YouTube and enjoy unlimited summaries.
-      </p>
+<section class="page-content">
+  <div class="container-narrow" style="text-align: center;">
+    <div style="font-size: 64px; color: #22c55e; margin-bottom: 16px;">✅</div>
 
-      <div class="checkout-plan-info">
-        <div class="plan-name">What's next?</div>
-        <p style="margin-top: 12px; color: #555; font-size: 14px;">
-          1. Open YouTube in your browser<br>
-          2. Click the YouTube Summary extension icon<br>
-          3. Your premium access is ready to use
-        </p>
+    <h1 id="title">Payment Successful!</h1>
+
+    <div class="info-box info-warning" id="processing-block" style="background: #fef3c7; border: 1px solid #fbbf24; border-radius: 12px; padding: 18px; margin: 20px 0; text-align: left;">
+      <div style="font-weight: 600; margin-bottom: 6px; color: #92400e;" id="processing-title">⏳ Activation in progress</div>
+      <div style="font-size: 14px; color: #78350f; line-height: 1.5;" id="processing-text">
+        Your payment is being verified. This usually takes <strong>3–6 minutes</strong>.<br>
+        Once activated, you'll receive a confirmation email with your subscription details.
       </div>
-
-      <a href="https://www.youtube.com" class="pay-button pay-card" style="display: inline-block; text-decoration: none;">Go to YouTube</a>
-
-      <p class="checkout-disclaimer" style="margin-top: 30px;">
-        A confirmation email has been sent to your inbox.<br>
-        Need help? <a href="contact.html" style="color: #ff4b4b;">Contact us</a>
-      </p>
     </div>
+
+    <div class="info-box" style="background: #f3f4f6; border-radius: 12px; padding: 18px; margin: 20px 0; text-align: left;">
+      <div style="font-weight: 600; margin-bottom: 8px;" id="next-title">What's next?</div>
+      <ol style="padding-left: 20px; line-height: 1.8;">
+        <li id="step-1">Wait a few minutes and check your email for the confirmation.</li>
+        <li id="step-2">Open YouTube in your browser.</li>
+        <li id="step-3">Click the YouTube Summary extension icon.</li>
+        <li id="step-4">Your premium access will be ready to use.</li>
+      </ol>
+    </div>
+
+    <p style="font-size: 13px; color: #888; margin-top: 24px;" id="support-text">
+      If you don't receive the email within 10 minutes, please check your spam folder, or
+      <a href="contact.html" style="color: #ff4b4b;" id="support-link">contact us</a>.
+    </p>
+
+    <a href="https://youtube.com" class="btn-primary" id="cta-button" style="display: inline-block; background: #1a1a1a; color: #fff; padding: 12px 32px; border-radius: 8px; text-decoration: none; margin-top: 16px; font-weight: 600;">
+      Go to YouTube
+    </a>
   </div>
 </section>
 
@@ -59,6 +66,70 @@
     <div class="copyright">© 2026 YouTube Summary. All rights reserved.</div>
   </div>
 </footer>
+
+<script>
+  // i18n переводы
+  const I18N = {
+    en: {
+      title: 'Payment Successful!',
+      processingTitle: '⏳ Activation in progress',
+      processingText: "Your payment is being verified. This usually takes <strong>3–6 minutes</strong>.<br>Once activated, you'll receive a confirmation email with your subscription details.",
+      nextTitle: "What's next?",
+      step1: 'Wait a few minutes and check your email for the confirmation.',
+      step2: 'Open YouTube in your browser.',
+      step3: 'Click the YouTube Summary extension icon.',
+      step4: 'Your premium access will be ready to use.',
+      supportText: "If you don't receive the email within 10 minutes, please check your spam folder, or",
+      supportLink: 'contact us',
+      cta: 'Go to YouTube',
+    },
+    ru: {
+      title: 'Оплата прошла успешно!',
+      processingTitle: '⏳ Идёт активация',
+      processingText: 'Ваш платёж проверяется. Это обычно занимает <strong>3–6 минут</strong>.<br>После активации вы получите письмо с подтверждением и деталями подписки.',
+      nextTitle: 'Что дальше?',
+      step1: 'Подождите несколько минут и проверьте свой email — придёт письмо с подтверждением.',
+      step2: 'Откройте YouTube в браузере.',
+      step3: 'Нажмите на иконку расширения YouTube Summary.',
+      step4: 'Ваш премиум-доступ готов к использованию.',
+      supportText: 'Если письмо не пришло в течение 10 минут — проверьте папку Спам или',
+      supportLink: 'свяжитесь с нами',
+      cta: 'Перейти на YouTube',
+    },
+  };
+
+  // Определяем язык из URL
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get('lang') === 'ru' ? 'ru' : 'en';
+  const t = I18N[lang];
+
+  // Применяем переводы
+  document.getElementById('title').textContent = t.title;
+  document.getElementById('processing-title').textContent = t.processingTitle;
+  document.getElementById('processing-text').innerHTML = t.processingText;
+  document.getElementById('next-title').textContent = t.nextTitle;
+  document.getElementById('step-1').textContent = t.step1;
+  document.getElementById('step-2').textContent = t.step2;
+  document.getElementById('step-3').textContent = t.step3;
+  document.getElementById('step-4').textContent = t.step4;
+  document.getElementById('support-text').innerHTML = t.supportText + ' <a href="' + (lang === 'ru' ? 'contact-ru.html' : 'contact.html') + '" style="color: #ff4b4b;">' + t.supportLink + '</a>.';
+  document.getElementById('cta-button').textContent = t.cta;
+
+  // Активная вкладка языка
+  const langEnLink = document.getElementById('lang-en');
+  const langRuLink = document.getElementById('lang-ru');
+
+  langEnLink.href = 'payment-success.html?lang=en';
+  langRuLink.href = 'payment-success.html?lang=ru';
+
+  if (lang === 'ru') {
+    langEnLink.classList.remove('active');
+    langRuLink.classList.add('active');
+  } else {
+    langEnLink.classList.add('active');
+    langRuLink.classList.remove('active');
+  }
+</script>
 
 </body>
 </html>
