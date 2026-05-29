@@ -487,12 +487,17 @@ footer .copyright {
   position: relative;
   width: 100%;
   max-width: 760px;
-  margin: 50px auto 0;
-  padding-bottom: 0;
+  margin: 70px auto 0;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 16 / 9) {
+  .video-wrap { height: 0; padding-bottom: 56.25%; }
 }
 
 .video-wrap iframe {
@@ -501,6 +506,7 @@ footer .copyright {
   width: 100%;
   height: 100%;
   border: 0;
+  display: block;
 }
 
 /* How it works */
@@ -585,8 +591,9 @@ footer .copyright {
 }
 
 .faq-cta {
-  text-align: center;
-  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
 }
 
 @media (max-width: 600px) {
