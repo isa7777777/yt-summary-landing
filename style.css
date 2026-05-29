@@ -600,3 +600,48 @@ footer .copyright {
   .how h2, .faq h2 { font-size: 28px; }
   .video-wrap { margin-top: 36px; }
 }
+
+/* Content text blocks on SEO pages */
+.content-block {
+  max-width: 760px;
+  margin: 0 auto 50px;
+}
+.content-block p {
+  color: #444;
+  font-size: 17px;
+  margin-bottom: 18px;
+}
+.features h2 + .content-block { margin-top: 0; }
+
+/* Internal links section */
+.learn-more {
+  padding: 60px 0;
+  border-top: 1px solid #eee;
+}
+.learn-more h2 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.learn-grid a {
+  display: block;
+  padding: 16px 20px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: border-color 0.2s;
+}
+.learn-grid a:hover {
+  border-color: #ff4b4b;
+  color: #ff4b4b;
+}
