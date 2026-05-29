@@ -3,9 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Summary — AI summaries for YouTube videos</title>
-  <meta name="description" content="Get AI-powered summaries and smart timestamps for any YouTube video. Save hours of viewing time.">
+
+  <!-- Primary SEO -->
+  <title>YouTube Summary — AI Summaries & Timestamps for Any YouTube Video</title>
+  <meta name="description" content="Free Chrome extension that creates AI-powered summaries with clickable timestamps for any YouTube video. Save time, jump to key moments, read in 15+ languages. 2 free summaries to start.">
+  <link rel="canonical" href="https://tubesummary.org/">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tubesummary.org/">
+  <meta property="og:title" content="YouTube Summary — AI Summaries & Timestamps for Any YouTube Video">
+  <meta property="og:description" content="Free Chrome extension that summarizes any YouTube video with AI and clickable timestamps. Watch a 1-hour video in 3 minutes.">
+  <meta property="og:image" content="https://tubesummary.org/og-image.png">
+  <meta property="og:site_name" content="YouTube Summary">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YouTube Summary — AI Summaries & Timestamps">
+  <meta name="twitter:description" content="Free Chrome extension that summarizes any YouTube video with AI and clickable timestamps.">
+  <meta name="twitter:image" content="https://tubesummary.org/og-image.png">
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- Structured data: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "YouTube Summary",
+    "operatingSystem": "Chrome",
+    "applicationCategory": "BrowserApplication",
+    "description": "AI-powered summaries with clickable timestamps for any YouTube video, in 15+ languages.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "url": "https://tubesummary.org/",
+    "downloadUrl": "https://chromewebstore.google.com/detail/ippdkmjbdjofdhmjlbamjfdcbejmkkkd"
+  }
+  </script>
+
+  <!-- Structured data: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I summarize a YouTube video?", "acceptedAnswer": { "@type": "Answer", "text": "Install the YouTube Summary Chrome extension, open any YouTube video, and click the Summary button. The AI reads the video transcript and gives you a concise summary with clickable timestamps in seconds." } },
+      { "@type": "Question", "name": "Is YouTube Summary free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. You get 2 free summaries to start with no payment required. Paid plans start at $3.25/month for 50 summaries per month if you need more." } },
+      { "@type": "Question", "name": "What languages does it support?", "acceptedAnswer": { "@type": "Answer", "text": "YouTube Summary works with videos in 15+ languages including English, Spanish, German, French, Russian, Chinese, Japanese and Korean. It can also translate the summary into your own language with one click." } },
+      { "@type": "Question", "name": "Does it work on any YouTube video?", "acceptedAnswer": { "@type": "Answer", "text": "It works on any YouTube video that has a transcript available. Most videos do. The summary is generated directly from that transcript." } },
+      { "@type": "Question", "name": "Do you track what I watch?", "acceptedAnswer": { "@type": "Answer", "text": "No. We do not track your viewing history. Your YouTube activity stays on YouTube." } }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -13,24 +62,58 @@
   <div class="container">
     <a href="index.html" class="logo">YouTube<span> Summary</span></a>
     <nav>
-  <a href="#features">Features</a>
-  <a href="#pricing">Pricing</a>
-  <a href="contact.html">Contact</a>
-  <a href="index-ru.html">🇷🇺 Русская версия</a>
-  <span class="lang-switcher">
-    <a href="index.html" class="active">EN</a>
-    <a href="index-ru.html">RU</a>
-  </span>
-</nav>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <span class="lang-switcher">
+        <a href="index.html" class="active">EN</a>
+        <a href="index-ru.html">RU</a>
+      </span>
+    </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
     <h1>Summarize <span>any YouTube video</span><br>in seconds</h1>
-    <p>AI-powered summaries and smart timestamps. Watch a 1-hour video in 3 minutes. Available in 15+ languages.<sup>*</sup></p>
-    <a href="#" class="cta-button" id="install-btn">Install Free Extension</a>
-    <a href="#pricing" class="cta-button secondary">See Pricing</a>
+    <p>AI-powered summaries with clickable timestamps. Watch a 1-hour video in 3 minutes — in 15+ languages.<sup>*</sup></p>
+    <a href="https://chromewebstore.google.com/detail/ippdkmjbdjofdhmjlbamjfdcbejmkkkd" class="cta-button" target="_blank" rel="noopener">Add to Chrome — Free</a>
+    <a href="#how" class="cta-button secondary">See how it works</a>
+
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/e9xphYhaZuA"
+        title="YouTube Summary demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <h2>How it works</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Install the extension</h3>
+        <p>Add YouTube Summary to Chrome in one click. It's free and takes a few seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Open any YouTube video</h3>
+        <p>A small widget appears on the video page. Click "Summary" to generate an AI summary of the video.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Read, jump, translate</h3>
+        <p>Get the key points instantly, click timestamps to jump to important moments, and translate into your language.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -38,35 +121,17 @@
   <div class="container">
     <h2>Why YouTube Summary</h2>
     <div class="features-grid">
-      <div class="feature">
-        <h3>⚡ Instant summaries</h3>
-        <p>Get the key points of any video in seconds. AI reads the transcript and gives you a concise overview.</p>
-      </div>
-      <div class="feature">
-        <h3>🎯 Smart timestamps</h3>
-        <p>Jump directly to the most important moments. AI generates accurate chapter markers for any video.</p>
-      </div>
-      <div class="feature">
-        <h3>🌍 15+ languages</h3>
-        <p>Works with videos in English, Spanish, German, French, Russian, Chinese, Japanese, Korean, and more.</p>
-      </div>
-      <div class="feature">
-        <h3>🔄 Translate on the fly</h3>
-        <p>Watching a video in another language? Translate the summary into your language with one click.</p>
-      </div>
-      <div class="feature">
-        <h3>🚀 Adaptive length</h3>
-        <p>Short summary for short videos, detailed for long ones. Always the right amount of information.</p>
-      </div>
-      <div class="feature">
-        <h3>🔒 Privacy first</h3>
-        <p>We don't track what you watch. Your viewing history stays on YouTube.</p>
-      </div>
+      <div class="feature"><h3>⚡ Instant summaries</h3><p>Get the key points of any video in seconds. The AI reads the transcript and gives you a concise overview.</p></div>
+      <div class="feature"><h3>🎯 Smart timestamps</h3><p>Jump directly to the most important moments. AI generates accurate clickable chapter markers for any video.</p></div>
+      <div class="feature"><h3>🌍 15+ languages</h3><p>Works with videos in English, Spanish, German, French, Russian, Chinese, Japanese, Korean, and more.</p></div>
+      <div class="feature"><h3>🔄 Translate on the fly</h3><p>Watching a video in another language? Translate the summary into your language with one click.</p></div>
+      <div class="feature"><h3>🚀 Adaptive length</h3><p>Short summary for short videos, detailed for long ones. Always the right amount of information.</p></div>
+      <div class="feature"><h3>🔒 Privacy first</h3><p>We don't track what you watch. Your viewing history stays on YouTube.</p></div>
     </div>
   </div>
 </section>
 
-<div class="container" style="padding: 0 20px; max-width: 1100px; margin: -40px auto 40px; font-size: 12px; color: #888; text-align: center;">
+<div class="container disclaimer-note">
   <sup>*</sup> Summaries are generated from video transcripts. Some YouTube videos may not have transcripts available.
 </div>
 
@@ -74,52 +139,46 @@
   <div class="container">
     <h2>Simple pricing</h2>
     <p class="pricing-subtitle">Start free. Upgrade when you need more.</p>
-
     <div class="pricing-grid">
-
       <div class="plan">
         <h3>Free</h3>
         <div class="price">$0</div>
         <div class="price-suffix">Forever</div>
-        <ul>
-          <li>2 free summaries (one-time)</li>
-          <li>15+ languages</li>
-          <li>Translation on demand</li>
-          <li>Smart timestamps</li>
-        </ul>
-        <a href="#" class="plan-button" id="install-btn-2">Install Free</a>
+        <ul><li>2 free summaries (one-time)</li><li>15+ languages</li><li>Translation on demand</li><li>Smart timestamps</li></ul>
+        <a href="https://chromewebstore.google.com/detail/ippdkmjbdjofdhmjlbamjfdcbejmkkkd" class="plan-button" target="_blank" rel="noopener">Install Free</a>
       </div>
-
       <div class="plan featured">
         <h3>Pro</h3>
         <div class="price">$39</div>
         <div class="price-suffix">per year ($3.25/mo)</div>
         <div class="save">Save $20 vs monthly</div>
-        <ul>
-          <li>50 summaries per month</li>
-          <li>Everything in Free</li>
-          <li>Priority support</li>
-          <li>Cancel anytime</li>
-        </ul>
+        <ul><li>50 summaries per month</li><li>Everything in Free</li><li>Priority support</li><li>Cancel anytime</li></ul>
         <a href="checkout.html?plan=pro_yearly" class="plan-button">Get Pro Yearly</a>
         <a href="checkout.html?plan=pro_monthly" class="alt-link">or pay $4.99 monthly →</a>
       </div>
-
       <div class="plan">
         <h3>Premium</h3>
         <div class="price">$79</div>
         <div class="price-suffix">per year ($6.58/mo)</div>
         <div class="save">Save $40 vs monthly</div>
-        <ul>
-          <li>150 summaries per month</li>
-          <li>Everything in Pro</li>
-          <li>Best for power users</li>
-          <li>Cancel anytime</li>
-        </ul>
+        <ul><li>150 summaries per month</li><li>Everything in Pro</li><li>Best for power users</li><li>Cancel anytime</li></ul>
         <a href="checkout.html?plan=premium_yearly" class="plan-button">Get Premium Yearly</a>
         <a href="checkout.html?plan=premium_monthly" class="alt-link">or pay $9.99 monthly →</a>
       </div>
+    </div>
+  </div>
+</section>
 
+<section class="faq" id="faq">
+  <div class="container-narrow">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item"><h3>How do I summarize a YouTube video?</h3><p>Install the YouTube Summary Chrome extension, open any YouTube video, and click the Summary button. The AI reads the video transcript and gives you a concise summary with clickable timestamps in seconds.</p></div>
+    <div class="faq-item"><h3>Is YouTube Summary free?</h3><p>Yes. You get 2 free summaries to start with no payment required. Paid plans start at $3.25/month for 50 summaries per month if you need more.</p></div>
+    <div class="faq-item"><h3>What languages does it support?</h3><p>It works with videos in 15+ languages including English, Spanish, German, French, Russian, Chinese, Japanese and Korean. It can also translate the summary into your own language with one click.</p></div>
+    <div class="faq-item"><h3>Does it work on any YouTube video?</h3><p>It works on any YouTube video that has a transcript available — most videos do. The summary is generated directly from that transcript.</p></div>
+    <div class="faq-item"><h3>Do you track what I watch?</h3><p>No. We don't track your viewing history. Your YouTube activity stays on YouTube.</p></div>
+    <div class="faq-cta">
+      <a href="https://chromewebstore.google.com/detail/ippdkmjbdjofdhmjlbamjfdcbejmkkkd" class="cta-button" target="_blank" rel="noopener">Add to Chrome — Free</a>
     </div>
   </div>
 </section>

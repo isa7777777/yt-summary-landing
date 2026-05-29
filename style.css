@@ -479,3 +479,117 @@ footer .copyright {
   nav { width: 100%; text-align: center; }
   nav a { margin: 0 10px; }
 }
+
+/* ===== SEO additions: video, how-it-works, faq ===== */
+
+/* Video embed (responsive 16:9) */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 50px auto 0;
+  padding-bottom: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  aspect-ratio: 16 / 9;
+}
+
+.video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* How it works */
+.how {
+  padding: 80px 0;
+}
+
+.how h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.step {
+  text-align: center;
+  padding: 20px;
+}
+
+.step-num {
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
+  margin: 0 auto 18px;
+  background: #ff4b4b;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  border-radius: 50%;
+}
+
+.step h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.step p {
+  color: #555;
+}
+
+/* Disclaimer note */
+.disclaimer-note {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  margin: -30px auto 30px;
+}
+
+/* FAQ */
+.faq {
+  padding: 80px 0;
+  background: #fafafa;
+}
+
+.faq h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.faq-item {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+
+.faq-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.faq-item p {
+  color: #555;
+}
+
+.faq-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+  .how h2, .faq h2 { font-size: 28px; }
+  .video-wrap { margin-top: 36px; }
+}
