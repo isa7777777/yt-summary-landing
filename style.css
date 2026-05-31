@@ -673,3 +673,13 @@ footer .copyright {
 @media (max-width: 600px) {
   .timestamp-banner h2 { font-size: 25px; }
 }
+
+/* Footer badges */
+.footer-badges {
+  margin: 20px 0 10px;
+  text-align: center;
+}
+.footer-badges a {
+  display: inline-block;
+  margin: 0 6px;
+}
